@@ -2,37 +2,55 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './index.js',
+  entry:  "./src/index.js", 
   mode: 'development',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'index_bundle.js',
+    filename: 'bundle.js',
+    chunkFilename : "[name].[chunkhash].js"
   },
   target: 'web',
   devServer: {
     port: '5000',
     static: {
-      directory: path.join(__dirname, 'public')
+    directory: path.join(__dirname, 'public')
 },
-    open: true,
+    historyApiFallback: true,
     hot: true,
+    open: true,
     liveReload: true,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/, 
-        exclude: /node_modules/, 
-        use: 'babel-loader', 
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html')
     })
-  ]
+  ],
+  module:{
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      },
+      {
+        test: /\.jsx$/,
+        include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      }
+    ]
+  },
 };
