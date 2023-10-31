@@ -1,4 +1,4 @@
-import React, {useMemo, lazy, Suspense} from "react";
+import React, { useMemo } from "react";
 import loadable from '@loadable/component';
 import { Routes, Route, Navigate } from "react-router-dom";
 import DynamicLoader from "./components/DynamicLoader";
@@ -10,11 +10,10 @@ const DummyList = loadable(() => import('./tabs/dummyList'));
 const DummyTable = loadable(() => import('./tabs/dummyTable'));
 const NotFound = loadable(() => import('./tabs/NotFound'));
 
-
 const componentMapping = {
-  'DummyTable': <DummyTable/>,
-  'DummyChart': <DummyChart/>,
-  'DummyList': <DummyList/>,
+	'DummyTable': <DummyTable />,
+	'DummyChart': <DummyChart />,
+	'DummyList': <DummyList />,
 };
 
 const App = () => {
@@ -23,31 +22,19 @@ const App = () => {
 
 	return (
 		<>
-		
 			<Routes>
 				<Route path="/" element={<Layout tabs={sortedTabs} />}>
-					<Route index element={<Navigate to={sortedTabs[0].title} replace={true} />}/>
-					
-			
-						{/* <Route path="dummyTable" element={<DummyTable/>}/>
-						<Route path="dummyList" element={<DummyList/>}/>
-						<Route path="dummyChart" element={<DummyChart/>}/>
-						<Route path="*" element={<NotFound/>}/> */}
-
+					<Route index element={<Navigate to={sortedTabs[0].id} replace={true} />} />
 					{tabs && tabs.map(tab => (
-						<Route key={tab.id} path={tab.id} element={componentMapping[tab.component]}/>
+						<Route key={tab.id} path={tab.id} element={componentMapping[tab.component]} />
 					))}
-					{/* <Route path="dummyList" render={() =>  {
-						const DummyChart = loadable(() => import('./tabs/DummyChart'));
-						return <DummyChart/>
-					}}/> */}
-					<Route path="*" element={<NotFound/>}/>
+					<Route path="*" element={<NotFound />} />
 					{/* {tabs && tabs.map(tab => (
-						<Route key={tab.id} path={tab.id} element={dynamic(tab.path)}/>
+						<Route key={tab.id} path={tab.id} element={<DynamicLoader path={tab.path}/>}/>
 					))} */}
 				</Route>
 			</Routes>
-	
+
 		</>
 	)
 }
