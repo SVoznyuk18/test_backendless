@@ -6,8 +6,8 @@ import Layout from "./components/Layout";
 import tabs from '../tabs.json';
 
 const DummyChart = loadable(() => import('./tabs/DummyChart'));
-const DummyList = loadable(() => import('./tabs/dummyList'));
-const DummyTable = loadable(() => import('./tabs/dummyTable'));
+const DummyList = loadable(() => import('./tabs/DummyList'));
+const DummyTable = loadable(() => import('./tabs/DummyTable'));
 const NotFound = loadable(() => import('./tabs/NotFound'));
 
 const componentMapping = {
